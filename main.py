@@ -5,8 +5,6 @@ import joblib
 from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi import FastAPI, HTTPException
-import logging
 
 ml_model = {} #{"model":"credit_risk_model.pkl"}
 
@@ -34,19 +32,6 @@ class LoanApplication(BaseModel): #Pydantic model (Validation)
     loan_percent_income: float
     cb_person_default_on_file: str
     cb_person_cred_hist_length: int
-
-@app.get("/ledger/data")
-async def get_ledger_data():
-    try:
-        # Replace this line with your actual ledger client call
-        result = await ledger_client.get_records()
-        return result
-    except Exception as e:
-        logging.error(f"Ledger connection failure: {str(e)}")
-        raise HTTPException(
-            status_code=502, 
-            detail=f"Ledger service communication error: {str(e)}"
-        )
 
 @app.post('/predict')
 def predict(data : LoanApplication):
