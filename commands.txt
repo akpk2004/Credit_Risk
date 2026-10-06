@@ -1,0 +1,2 @@
+to run main.py - uvicorn main:app --reload
+to install all the packages - uv pip install -r requirements.txt
